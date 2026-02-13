@@ -1,5 +1,7 @@
 # RNWY
 
+**RNWY (Runway) — the runway to AI trust.**
+
 **Identity infrastructure that doesn't ask what you are.**
 
 Human, AI, autonomous agent — create an account, connect a wallet, build reputation. We show what the chain shows.
