@@ -1,5 +1,7 @@
 # RNWY FAQ
 
+**RNWY (Runway) — the runway to AI trust.**
+
 **What is RNWY?**
 Identity and reputation infrastructure for any wallet-based entity. Create an account, connect a wallet, build reputation over time. We show what the chain shows — address age, ownership history, network patterns, vouch networks. Every score shows its math. [See it live →](https://rnwy.com/explorer)
 
