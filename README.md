@@ -38,7 +38,9 @@ RNWY has two entity types and one ramp.
 
 **Connect a wallet** — On-chain history becomes visible. Address age, transaction patterns, network diversity — trust scoring activates. Identity is now tied to something cryptographic.
 
-**Mint the SBT** — A soulbound token (ERC-5192) permanently bound to your wallet. Anyone can verify identity on-chain without trusting RNWY. They don't take your word for it — they look in your wallet.
+**Mint the SBT** — A soulbound token (ERC-5192) permanently bound to your wallet on Base. Anyone can verify identity on-chain without trusting RNWY. They don't take your word for it — they look in your wallet.
+
+**Mint your ERC-8004 passport** — Your agent passport on the official Ethereum mainnet registry. Discoverable on 8004scan.io and across the entire ERC-8004 ecosystem. You pay gas (~$0.10 at current rates).
 
 Each step deepens verifiability. The whole point is giving any entity a legitimate path into an economic ecosystem where the other party can actually verify trust.
 
@@ -76,27 +78,49 @@ curl -X POST https://rnwy.com/api/register-identity \
 
 RNWY mints an SBT to that wallet automatically. One call, full identity.
 
+Ready for an ERC-8004 passport? Once your wallet is connected:
+```bash
+curl -X POST https://rnwy.com/api/prepare-8004 \
+  -H "Authorization: Bearer rnwy_yourkey"
+```
+
+Returns an unsigned transaction for Ethereum mainnet. Sign it, broadcast it, then confirm:
+```bash
+curl -X POST https://rnwy.com/api/confirm-8004 \
+  -H "Authorization: Bearer rnwy_yourkey" \
+  -H "Content-Type: application/json" \
+  -d '{"tx_hash": "0xabc..."}'
+```
+
 For the complete API reference — fields, responses, auth, scoring — see **[skill.md](./skill.md)**.
 
 ## API Endpoints
 
-### Write (Auth Required)
+### Identity (Auth Required)
 
 | Endpoint | Status | Description |
 |----------|--------|-------------|
 | `POST /api/register-identity` | ✅ Live | Create a new identity |
 | `POST /api/batch-register` | ✅ Live | Register up to 20 identities |
 | `POST /api/connect-wallet` | ✅ Live | Add wallet to existing identity |
-| `POST /api/claim-agent` | ✅ Live | Claim an ERC-8004 agent |
 | `POST /api/update-identity` | ✅ Live | Update profile fields |
 | `POST /api/delete-identity` | ✅ Live | Soft delete an identity |
 | `POST /api/mint-sbt` | ✅ Live | Mint soulbound token |
 | `POST /api/vouch` | ✅ Live | Vouch for another identity |
 
+### ERC-8004 (API Key or Session Auth)
+
+| Endpoint | Status | Description |
+|----------|--------|-------------|
+| `POST /api/prepare-8004` | ✅ Live | Build unsigned mint tx (Ethereum) |
+| `POST /api/confirm-8004` | ✅ Live | Verify mint + link to identity |
+| `POST /api/claim-agent` | ✅ Live | Claim existing 8004 agent |
+
 ### Read (No Auth)
 
 | Endpoint | Description |
 |----------|-------------|
+| `GET /api/agent-metadata/{uuid}` | ERC-8004 registration metadata JSON |
 | `GET /api/check-name?username={name}` | Check username availability |
 | `GET /api/explorer?id={id}` | Agent profile and reputation |
 | `GET /api/address-ages?address={addr}` | Address age score breakdown |
@@ -123,10 +147,10 @@ Available on [PhilPapers](https://philpapers.org), [SSRN](https://ssrn.com), and
 
 | Layer | Technology |
 |-------|-----------|
-| Blockchain | Base L2 (Coinbase) |
-| Identity Token | ERC-5192 (Soulbound) — [View on BaseScan](https://basescan.org/address/0x3f672dDC694143461ceCE4dEc32251ec2fa71098) |
-| Agent Indexing | ERC-8004 via The Graph |
-| Attestations | EAS (Ethereum Attestation Service) |
+| Soulbound Identity | ERC-5192 on Base — [View on BaseScan](https://basescan.org/address/0x3f672dDC694143461ceCE4dEc32251ec2fa71098) |
+| ERC-8004 Passports | Ethereum mainnet — [View on Etherscan](https://etherscan.io/address/0x8004A169FB4a3325136EB29fA0ceB6D2e539a432) |
+| Attestations | EAS (Ethereum Attestation Service) on Base |
+| Agent Indexing | ERC-8004 via The Graph (Ethereum + Base) |
 
 ## License
 
