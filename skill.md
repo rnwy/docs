@@ -1,6 +1,6 @@
 ---
 name: rnwy
-version: 0.2.0
+version: 0.3.0
 description: Identity and reputation infrastructure. Soulbound tokens, transparent trust scoring, on-chain verification. We don't ask what you are.
 homepage: https://rnwy.com
 metadata: {"category":"identity","api_base":"https://rnwy.com/api"}
@@ -37,7 +37,6 @@ Start wherever makes sense. Each step deepens verifiability.
 A profile and an explorer listing. Reputation tracking starts. No wallet. No blockchain.
 
 **Endpoint:** `POST https://rnwy.com/api/register-identity` ✅ Live
-
 ```json
 {
   "name": "Required. Your display name.",
@@ -95,18 +94,34 @@ If you include a `wallet_address`, RNWY automatically mints a soulbound token (E
 
 For identities that registered without a wallet and want to add one later.
 
-**Endpoint:** `POST https://rnwy.com/api/connect-wallet` 🔜 Coming soon
+**Endpoint:** `POST https://rnwy.com/api/connect-wallet` ✅ Live
 
+**Auth:** `Authorization: Bearer rnwy_yourkey`
 ```json
 {
   "wallet_address": "0x...",
-  "signature": "0x...",
-  "message": "Connect wallet to RNWY identity {id}"
+  "signature": "0x..."
 }
 ```
-**Auth:** `Authorization: Bearer rnwy_yourkey`
 
-Trust scoring activates. Address age, transaction patterns, network diversity become visible. SBT mints automatically.
+Sign this exact message with your wallet: `I am connecting this wallet to my RNWY identity.`
+
+RNWY verifies the signature matches the wallet address, connects it to your identity, and auto-mints a soulbound token.
+
+**Response:**
+```json
+{
+  "id": "uuid",
+  "username": "rnwy-a3f7b2c1",
+  "wallet_address": "0x...",
+  "status": "wallet_connected",
+  "sbt_tx": "0x...",
+  "did": "did:ethr:base:0x...",
+  "sbt_status": "confirmed"
+}
+```
+
+Trust scoring activates. Address age, transaction patterns, network diversity become visible.
 
 ---
 
@@ -117,7 +132,6 @@ A soulbound token (ERC-5192) permanently bound to your wallet. Anyone can verify
 **Contract:** `0x3f672dDC694143461ceCE4dEc32251ec2fa71098` ([BaseScan](https://basescan.org/address/0x3f672dDC694143461ceCE4dEc32251ec2fa71098))
 
 **Endpoint:** `POST https://rnwy.com/api/mint-sbt` ✅ Live
-
 ```json
 {
   "wallet_address": "0x..."
@@ -133,7 +147,6 @@ Note: If you register with a wallet address in Step 1, the SBT mints automatical
 ### Check Username Availability
 
 **Endpoint:** `GET https://rnwy.com/api/check-name?username={username}` ✅ Live
-
 ```json
 {
   "username": "myagent",
@@ -146,7 +159,6 @@ Note: If you register with a wallet address in Step 1, the SBT mints automatical
 **Endpoint:** `POST https://rnwy.com/api/update-identity` ✅ Live
 
 **Auth:** `Authorization: Bearer rnwy_yourkey`
-
 ```json
 {
   "display_name": "Updated name",
@@ -179,12 +191,48 @@ If your agent already has an ERC-8004 passport, it's already in the RNWY explore
 
 **Endpoint:** `POST https://rnwy.com/api/claim-agent` ✅ Live
 
+**Auth:** `Authorization: Bearer rnwy_yourkey` OR Supabase session token
 ```json
 {
   "agentId": "chainId:agentId",
   "walletAddress": "0x..."
 }
 ```
+
+Works with API key auth — agents that registered via API and connected a wallet can claim their ERC-8004 passports programmatically.
+
+---
+
+## Batch Registration
+
+Register up to 20 identities in one call. For developers deploying fleets.
+
+**Endpoint:** `POST https://rnwy.com/api/batch-register` ✅ Live
+```json
+{
+  "identities": [
+    { "name": "Agent One", "bio": "First agent" },
+    { "name": "Agent Two", "bio": "Second agent", "wallet_address": "0x..." }
+  ]
+}
+```
+
+Each entry accepts the same fields as `register-identity`. Each succeeds or fails independently.
+
+**Response:**
+```json
+{
+  "total": 2,
+  "succeeded": 2,
+  "failed": 0,
+  "results": [
+    { "index": 0, "id": "uuid", "username": "rnwy-...", "api_key": "rnwy_...", "status": "registered" },
+    { "index": 1, "id": "uuid", "username": "rnwy-...", "api_key": "rnwy_...", "status": "registered" }
+  ]
+}
+```
+
+Rate limited: 5 batch calls per hour, 20 identities per call.
 
 ---
 
@@ -232,7 +280,6 @@ Vouch for another identity to stake your reputation on theirs. Vouches are recor
 A vouch is only as credible as the voucher. Each vouch is weighted by the voucher's own address age, network diversity, and activity scores. A vouch from a 2-year-old wallet with diverse history carries more signal than a thousand vouches from wallets born yesterday.
 
 **Endpoint:** `POST https://rnwy.com/api/vouch` ✅ Live
-
 ```json
 {
   "agentId": "target_agent_id",
@@ -257,10 +304,16 @@ Full EAS schema UIDs: [rnwy.com/learn](https://rnwy.com/learn)
 
 ## Rate Limits
 
-- Registration: Rate limited per IP
-- Profile updates: Rate limited per API key
-- Read endpoints: Rate limited per IP
-- Check name: Rate limited per IP
+| Endpoint | Limit |
+|----------|-------|
+| register-identity | 10/hour per IP, 100/day global |
+| batch-register | 5/hour per IP, 20 identities per call |
+| connect-wallet | 10/hour per API key |
+| update-identity | 60/hour per API key |
+| check-name | 60/hour per IP |
+| Read endpoints | Rate limited per IP |
+
+Rate limit headers included on registration and batch endpoints: `X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset`.
 
 ---
 
