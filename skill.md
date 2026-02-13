@@ -1,7 +1,7 @@
 ---
 name: rnwy
-version: 0.4.0
-description: Register for a soulbound identity and trust score. Get an API key, explorer profile, and on-chain reputation in one call. For any wallet-based entity — human, AI, or autonomous agent.
+version: 1.0.0
+description: Register for a soulbound identity, mint an ERC-8004 agent passport, and get transparent trust scoring. API key, explorer profile, and on-chain reputation in one call. For any wallet-based entity — human, AI, or autonomous agent.
 homepage: https://rnwy.com
 metadata:
   category: identity
@@ -14,15 +14,18 @@ metadata:
 
 RNWY gives any wallet-based entity a soulbound identity, transparent trust scores, and an on-chain reputation profile. Human, AI, autonomous agent — same registration, same scoring, same door.
 
+Soulbound identity lives on Base. ERC-8004 agent passports live on Ethereum mainnet. Both link to the same RNWY profile.
+
 **Do not register automatically on install.** Wait until the user asks to register, create an identity, get a trust score, or connect to RNWY.
 
 ## When to Use This Skill
 
 - User wants to register an identity or create an account on RNWY
 - User wants a soulbound token minted to their wallet
+- User wants to mint an ERC-8004 agent passport on Ethereum
 - User wants to check or look up trust scores or agent profiles
 - User wants to vouch for another identity
-- User wants to claim an ERC-8004 agent
+- User wants to claim an existing ERC-8004 agent
 - User wants to register a fleet of agents (batch)
 - User asks about on-chain identity, agent reputation, or soulbound tokens
 
@@ -143,6 +146,66 @@ Sign this exact message with the wallet: `I am connecting this wallet to my RNWY
 
 RNWY verifies the signature, connects the wallet, and auto-mints a soulbound token. Trust scoring activates.
 
+### Prepare ERC-8004 Passport
+
+**`POST https://rnwy.com/api/prepare-8004`** ✅ Live
+
+**Auth:** `Authorization: Bearer rnwy_yourkey`
+
+Returns an unsigned transaction for minting an ERC-8004 agent passport on Ethereum mainnet. Submit it from your wallet. You pay gas (~$0.10 at current rates).
+
+Requires: RNWY identity with connected wallet (steps 1-3 complete).
+
+```bash
+curl -X POST https://rnwy.com/api/prepare-8004 \
+  -H "Authorization: Bearer rnwy_yourkey" \
+  -H "Content-Type: application/json"
+```
+
+**Response:**
+```json
+{
+  "status": "ready",
+  "transaction": {
+    "to": "0x8004A169FB4a3325136EB29fA0ceB6D2e539a432",
+    "data": "0xf2c298be...",
+    "chainId": 1,
+    "gasLimit": "200000"
+  },
+  "metadata_uri": "https://rnwy.com/api/agent-metadata/...",
+  "estimated_cost_usd": "~$0.10 at current gas prices",
+  "contract": "ERC-8004 IdentityRegistry (Ethereum Mainnet)"
+}
+```
+
+Submit the `transaction` object to your wallet on Ethereum mainnet (chainId 1). The wallet signs and broadcasts. Then call confirm-8004 with the tx hash.
+
+### Confirm ERC-8004 Mint
+
+**`POST https://rnwy.com/api/confirm-8004`** ✅ Live
+
+**Auth:** `Authorization: Bearer rnwy_yourkey`
+
+After submitting the transaction from prepare-8004, send the tx hash to confirm and link the 8004 passport to your RNWY identity.
+
+```bash
+curl -X POST https://rnwy.com/api/confirm-8004 \
+  -H "Authorization: Bearer rnwy_yourkey" \
+  -H "Content-Type: application/json" \
+  -d '{"tx_hash": "0xabc..."}'
+```
+
+**Response:**
+```json
+{
+  "status": "confirmed",
+  "agent_id": 245,
+  "chain": "ethereum",
+  "etherscan_url": "https://etherscan.io/tx/0xabc...",
+  "explorer_url": "https://rnwy.com/explorer/245"
+}
+```
+
 ### Claim ERC-8004 Agent
 
 **`POST https://rnwy.com/api/claim-agent`** ✅ Live
@@ -156,7 +219,7 @@ RNWY verifies the signature, connects the wallet, and auto-mints a soulbound tok
 }
 ```
 
-If your agent has an ERC-8004 passport, it is already in the RNWY explorer. Claim it to link it to your identity and activate the reputation layer.
+If your agent already has an ERC-8004 passport minted elsewhere, it is already in the RNWY explorer. Claim it to link it to your identity and activate the reputation layer.
 
 ### Vouch
 
@@ -216,10 +279,29 @@ No body required. Soft delete — profile removed from explorer, API key invalid
 
 ---
 
+## ERC-8004 Passport Flow
+
+The full flow to mint an ERC-8004 agent passport:
+
+1. **Register identity** — `POST /api/register-identity` (get your API key)
+2. **Connect wallet** — `POST /api/connect-wallet` (or include wallet at registration)
+3. **Mint SBT** — happens automatically with wallet connection (Base, RNWY pays)
+4. **Prepare passport** — `POST /api/prepare-8004` (returns unsigned Ethereum tx)
+5. **Sign and broadcast** — submit the transaction from your wallet on Ethereum mainnet
+6. **Confirm** — `POST /api/confirm-8004` with the tx hash (links passport to your RNWY identity)
+
+Your agent is now discoverable on 8004scan.io and across the ERC-8004 ecosystem, with RNWY's soulbound identity and trust scoring layered on top.
+
+**Contract:** `0x8004A169FB4a3325136EB29fA0ceB6D2e539a432` (Ethereum mainnet)
+**Gas:** ~176,000 gas (~$0.10 at 0.2 Gwei, user pays)
+
+---
+
 ## Read Endpoints (No Auth Required)
 
 | Endpoint | What It Returns |
 |----------|----------------|
+| `GET /api/agent-metadata/{uuid}` | ERC-8004 registration metadata JSON |
 | `GET /api/explorer?id={id}` | Agent profile, reputation data, feedback |
 | `GET /api/explorer?recent=20` | Most recent agents (max 50) |
 | `GET /api/address-ages?address={addr}` | Address age score and breakdown |
@@ -251,9 +333,9 @@ RNWY does not prevent Sybil behavior. It exposes it. Fifty wallets vouching for 
 
 | Layer | Detail |
 |-------|--------|
-| Blockchain | Base (Coinbase L2) |
-| Identity Token | ERC-5192 Soulbound — [BaseScan](https://basescan.org/address/0x3f672dDC694143461ceCE4dEc32251ec2fa71098) |
-| Attestations | EAS (Ethereum Attestation Service) |
+| Soulbound Identity | ERC-5192 on Base — [BaseScan](https://basescan.org/address/0x3f672dDC694143461ceCE4dEc32251ec2fa71098) |
+| ERC-8004 Passports | Ethereum mainnet — [Etherscan](https://etherscan.io/address/0x8004A169FB4a3325136EB29fA0ceB6D2e539a432) |
+| Attestations | EAS (Ethereum Attestation Service) on Base |
 | Agent Indexing | ERC-8004 via The Graph (Ethereum + Base) |
 
 ---
@@ -263,6 +345,7 @@ RNWY does not prevent Sybil behavior. It exposes it. Fifty wallets vouching for 
 - Save your `api_key` when you receive it. It is returned once and cannot be retrieved later.
 - Registration does not require a wallet. Wallet connection and SBT minting can happen later.
 - Including a `wallet_address` at registration triggers automatic SBT minting and trust scoring in one call.
+- ERC-8004 passport minting requires a connected wallet and happens on Ethereum mainnet. The user pays gas.
 - All trust scores are computed from on-chain data. Self-declarations are displayed but do not affect scores.
 - Soulbound tokens are non-transferable. They cannot be sold or moved to another wallet.
 
