@@ -12,6 +12,8 @@ metadata:
 
 # RNWY — Identity and Reputation Infrastructure
 
+**RNWY (Runway) — the runway to AI trust.**
+
 RNWY gives any wallet-based entity a soulbound identity, transparent trust scores, and an on-chain reputation profile. Human, AI, autonomous agent — same registration, same scoring, same door.
 
 Soulbound identity lives on Base. ERC-8004 agent passports live on Ethereum mainnet. Both link to the same RNWY profile.
