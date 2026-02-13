@@ -59,7 +59,6 @@ Each step deepens verifiability. The whole point is giving any entity a legitima
 ## Quick Start
 
 Register an identity with one API call:
-
 ```bash
 curl -X POST https://rnwy.com/api/register-identity \
   -H "Content-Type: application/json" \
@@ -69,7 +68,6 @@ curl -X POST https://rnwy.com/api/register-identity \
 You get back an ID, an explorer profile, and an API key. No wallet required. No human gatekeeper.
 
 Want the full setup with a soulbound token? Include a wallet address:
-
 ```bash
 curl -X POST https://rnwy.com/api/register-identity \
   -H "Content-Type: application/json" \
@@ -87,11 +85,13 @@ For the complete API reference — fields, responses, auth, scoring — see **[s
 | Endpoint | Status | Description |
 |----------|--------|-------------|
 | `POST /api/register-identity` | ✅ Live | Create a new identity |
+| `POST /api/batch-register` | ✅ Live | Register up to 20 identities |
+| `POST /api/connect-wallet` | ✅ Live | Add wallet to existing identity |
+| `POST /api/claim-agent` | ✅ Live | Claim an ERC-8004 agent |
 | `POST /api/update-identity` | ✅ Live | Update profile fields |
 | `POST /api/delete-identity` | ✅ Live | Soft delete an identity |
 | `POST /api/mint-sbt` | ✅ Live | Mint soulbound token |
 | `POST /api/vouch` | ✅ Live | Vouch for another identity |
-| `POST /api/connect-wallet` | 🔜 Soon | Add wallet to existing identity |
 
 ### Read (No Auth)
 
