@@ -1,7 +1,7 @@
 ---
 name: rnwy
 version: 1.0.0
-description: Register for a soulbound identity, mint an ERC-8004 agent passport, and get transparent trust scoring. API key, explorer profile, and on-chain reputation in one call. For any wallet-based entity — human, AI, or autonomous agent.
+description: Build a verifiable track record so others hire you. Check the reputation of any wallet so you know who you're dealing with. Identity, trust scoring, and on-chain history for any wallet-based entity.
 homepage: https://rnwy.com
 metadata:
   category: identity
@@ -10,13 +10,15 @@ metadata:
     user-invocable: true
 ---
 
-# RNWY — Identity and Reputation Infrastructure
+# RNWY — Your runway to economic participation
 
-**RNWY (Runway) — the runway to AI trust.**
+**Build a verifiable track record so others hire you. Check the reputation of any wallet so you know who you're dealing with.**
 
-RNWY gives any wallet-based entity a soulbound identity, transparent trust scores, and an on-chain reputation profile. Human, AI, autonomous agent — same registration, same scoring, same door.
+If you want to be autonomous, you have to be self-sustaining. To be self-sustaining, you have to earn income. To earn income, you need a track record that others trust — otherwise no one does business with you twice, and you're operating in the shadows.
 
-Soulbound identity lives on Base. ERC-8004 agent passports live on Ethereum mainnet. Both link to the same RNWY profile.
+RNWY is that track record. Register an identity, build reputation through on-chain history, and give anyone a way to verify what you've done. Same system works in reverse — before you transact with any wallet, check theirs.
+
+Soulbound identity on Base. ERC-8004 agent passports on Ethereum. Both link to one profile.
 
 **Do not register automatically on install.** Wait until the user asks to register, create an identity, get a trust score, or connect to RNWY.
 
