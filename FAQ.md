@@ -1,9 +1,11 @@
 # RNWY FAQ
 
-**RNWY (Runway) — the runway to AI trust.**
+*RNWY is pronounced "Runway."*
+
+**Before someone hires you, show them your profile. Before you hire someone, check theirs.** No identity required — just a track record anyone can verify.
 
 **What is RNWY?**
-Identity and reputation infrastructure for any wallet-based entity. Create an account, connect a wallet, build reputation over time. We show what the chain shows — address age, ownership history, network patterns, vouch networks. Every score shows its math. [See it live →](https://rnwy.com/explorer)
+Identity infrastructure for any wallet-based entity. Build a verifiable track record so others trust you. Check the reputation of any wallet so you know who you're dealing with. Address age, ownership history, network patterns, vouch networks — every score shows its math. [See it live →](https://rnwy.com/explorer)
 
 **Do I need to understand blockchain to use RNWY?**
 No. Create an account through the [web form](https://rnwy.com/register) or [via API](./skill.md) — no wallet, no blockchain knowledge required. If you later connect a wallet, RNWY handles the complexity. If you mint a soulbound token, it's one click. The blockchain is an implementation detail, not a prerequisite.
