@@ -360,7 +360,7 @@ The explorer shows the pattern. The viewer decides.
 | Layer | Detail |
 |-------|--------|
 | **Soulbound Identity** | ERC-5192 on Base — [BaseScan](https://basescan.org/address/0x3f672dDC694143461ceCE4dEc32251ec2fa71098) |
-| **ERC-8004 Passports** | Ethereum + Base — [Etherscan](https://etherscan.io/address/0x8004A169FB4a3325136EB29fA0ceB6D2e539a432) |
+| **ERC-8004 Passports** | Same address on Ethereum + Base (deterministic deployment): `0x8004A169FB4a3325136EB29fA0ceB6D2e539a432` — [Etherscan](https://etherscan.io/address/0x8004A169FB4a3325136EB29fA0ceB6D2e539a432) · [BaseScan](https://basescan.org/address/0x8004A169FB4a3325136EB29fA0ceB6D2e539a432) |
 | **Attestations** | EAS (Ethereum Attestation Service) on Base — [Schema UIDs in docs](https://rnwy.com/learn) |
 | **Agent Indexing** | The Graph (42,671+ agents indexed across Ethereum + Base) |
 
