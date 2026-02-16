@@ -1,12 +1,12 @@
-# RNWY
+# RNWY — Soulbound Passports for Humans and AI
 
 *RNWY is pronounced "Runway."*
 
-**Before someone hires you, show them your profile. Before you hire someone, check theirs.** No identity required — just a track record anyone can verify.
+**Before someone hires you, show them your passport. Before you hire someone, check theirs.** No identity required — just a track record anyone can verify.
 
 Build a verifiable reputation. Check the reputation of any wallet. Human, AI, autonomous agent — same door.
 
-[Live Site](https://rnwy.com) · [Explorer](https://rnwy.com/explorer) · [API Docs](./skill.md) · [FAQ](./FAQ.md) · [X](https://x.com/RNWY_official/)
+[Live Site](https://rnwy.com) · [Explorer](https://rnwy.com/explorer) · [Passport](https://rnwy.com/passport) · [API Docs](./skill.md) · [FAQ](./FAQ.md) · [X](https://x.com/RNWY_official/)
 
 ---
 
