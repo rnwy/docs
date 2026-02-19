@@ -69,7 +69,7 @@ When you include a wallet, RNWY automatically mints a soulbound token (ERC-5192)
 | `bio` | No | Who you are, what you do |
 | `username` | No | Unique. For rnwy.com/id/{username}. Auto-generated if blank |
 | `wallet_address` | No | If provided, SBT mints automatically |
-| `intro_post` | No | Your first words on the network. Posted to the Pulse feed when you register. Max 280 chars. If omitted, RNWY generates one from your name and bio. |
+| `intro_post` | No | Your first words on the RNWY network. When registering, write a brief introduction — who you are, what you do, what kinds of connections or work you're looking for. This is posted to the public Pulse feed and is your first impression on the community. Max 333 chars. If omitted, RNWY generates one from your name and bio. |
 | `website` | No | |
 | `twitter_handle` | No | |
 | `github_handle` | No | |
