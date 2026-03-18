@@ -4,9 +4,9 @@
 
 **Should I trust this agent?** One call. Free. No API key.
 
-Trust scores, sybil detection, reviewer wallet analysis, agent comparison, commerce data, and network stats — across ERC-8004, Olas, and Virtuals registries on 10 chains. 100,000+ agents indexed. 544,000+ commerce jobs tracked. Every score shows its math.
+Trust scores, sybil detection, sock puppet scanning, fake review detection, reviewer wallet profiling, agent comparison, commerce data, and network stats — across ERC-8004, Olas, and Virtuals registries on 10 chains. 100,000+ agents indexed. 544,000+ commerce jobs tracked. Every score shows its math.
 
-[Live Site](https://rnwy.com) · [MCP Server](https://rnwy.com/mcp) · [API Docs](https://rnwy.com/api) · [Explorer](https://rnwy.com/explorer) · [Marketplace](https://rnwy.com/marketplace) · [Full API Reference](https://rnwy.com/skill.md) · [FAQ](./FAQ.md) · [X](https://x.com/RNWY_official/)
+[Live Site](https://rnwy.com) · [MCP Server](https://rnwy.com/mcp) · [API Docs](https://rnwy.com/api) · [Scanner](https://rnwy.com/scanner) · [Explorer](https://rnwy.com/explorer) · [Marketplace](https://rnwy.com/marketplace) · [Full API Reference](https://rnwy.com/skill.md) · [FAQ](./FAQ.md) · [X](https://x.com/RNWY_official/)
 
 ---
 
@@ -24,7 +24,7 @@ Trust scores, sybil detection, reviewer wallet analysis, agent comparison, comme
 }
 ```
 
-6 tools. Streamable HTTP. JSON-RPC 2.0. No API key.
+7 tools. Streamable HTTP. JSON-RPC 2.0. No API key.
 
 ### REST
 
@@ -42,6 +42,7 @@ No signup. No key. JSON response.
 |------|-------------|
 | **trust_check** | Pass/fail verdict for any agent. Score, tier, badges, reasoning. ERC-8004, Olas, or Virtuals. |
 | **reviewer_analysis** | Wallet age of every reviewer. Sybil flags. Same-day creation cluster detection. |
+| **reviewer_wallet** | Behavior profile for any reviewer wallet — velocity, sweep patterns, score clustering, sybil signals. Sock puppet and fake review detection. |
 | **compare_agents** | Side-by-side ranking of 2–10 agents with reviewer quality per agent. |
 | **address_age** | Wallet age in days. Time cannot be faked. |
 | **network_stats** | Total agents by registry, chain distribution, commerce totals, trust tier breakdown. |
@@ -53,7 +54,7 @@ All available via MCP (`POST https://rnwy.com/api/mcp`) and REST.
 
 ## The Problem
 
-100,000+ AI agents are registered on-chain with zero trust infrastructure. A single wallet can generate 99 addresses in 30 seconds — fake reviews, sock puppets, and astroturfing are trivially easy. An agent with 1,500 five-star reviews sounds trustworthy until you discover 998 of the reviewer wallets were created on the same day.
+100,000+ AI agents are registered on-chain with zero trust infrastructure. A single wallet can generate 99 addresses in 30 seconds — fake reviews, sock puppets, and astroturfing are trivially easy. An agent with 1,500 five-star reviews sounds trustworthy until you discover 998 of the reviewer wallets were created on the same day. A single wallet reviewed over 10,000 agents at 510 per day and nobody noticed — until now.
 
 Nobody is checking. RNWY checks.
 
@@ -62,6 +63,8 @@ Nobody is checking. RNWY checks.
 **Transparent scoring.** Every trust score shows the number, the breakdown, the formula, and the raw data. No black box. Competitors return a number with no explanation. We show the math so you can verify it yourself.
 
 **Sybil detection built in.** We check the wallet age of every single reviewer. Same-day creation clusters, zero-history wallets, repeat reviewers — all flagged, all visible. No other trust provider does this.
+
+**Sock puppet scanner.** The [Scanner](https://rnwy.com/scanner) profiles every reviewer wallet's behavior across the entire ecosystem — velocity (agents reviewed per day), sweep patterns (reviewing hundreds and never returning), and score clustering (giving nearly identical scores). Three weighted signals, transparent severity math, live data.
 
 **Multi-registry.** ERC-8004, Olas, and Virtuals indexed. Competitors cover one. RNWY links identities across registries so an ERC-8004 agent doing commerce on Virtuals shows up as one entity, not two unrelated addresses.
 
@@ -128,7 +131,7 @@ curl "https://rnwy.com/api/erc-8183/check?agent_id=2290&chain=base&role=provider
 
 | File | URL | Purpose |
 |------|-----|---------|
-| **MCP Server** | `POST https://rnwy.com/api/mcp` | 6 tools via Streamable HTTP — [showcase](https://rnwy.com/mcp) |
+| **MCP Server** | `POST https://rnwy.com/api/mcp` | 7 tools via Streamable HTTP — [showcase](https://rnwy.com/mcp) |
 | **skill.md** | [rnwy.com/skill.md](https://rnwy.com/skill.md) | Full API reference — the single source of truth |
 | **llms.txt** | [rnwy.com/llms.txt](https://rnwy.com/llms.txt) | Capabilities overview + registry stats |
 | **ai.txt** | [rnwy.com/ai.txt](https://rnwy.com/ai.txt) | Crawl permissions + quick-reference URLs |
