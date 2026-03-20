@@ -4,7 +4,7 @@
 
 **Should I trust this agent?** One call. Free. No API key.
 
-Trust scores, sybil detection, sock puppet scanning, fake review detection, reviewer wallet profiling, agent comparison, commerce data, and network stats — across ERC-8004, Olas, and Virtuals registries on 10 chains. 100,000+ agents indexed. 544,000+ commerce jobs tracked. Every score shows its math.
+Trust scores, sybil detection, funding source analysis, sock puppet scanning, fake review detection, reviewer wallet profiling, agent comparison, commerce data, and network stats — across ERC-8004, Olas, and Virtuals registries on 10 chains. 100,000+ agents indexed. 544,000+ commerce jobs tracked. Every score shows its math. Every trust response is cryptographically signed.
 
 [Live Site](https://rnwy.com) · [MCP Server](https://rnwy.com/mcp) · [API Docs](https://rnwy.com/api) · [Scanner](https://rnwy.com/scanner) · [Explorer](https://rnwy.com/explorer) · [Marketplace](https://rnwy.com/marketplace) · [Full API Reference](https://rnwy.com/skill.md) · [FAQ](./FAQ.md) · [X](https://x.com/RNWY_official/)
 
@@ -32,7 +32,7 @@ Trust scores, sybil detection, sock puppet scanning, fake review detection, revi
 curl "https://rnwy.com/api/trust-check?id=16907&chain=base"
 ```
 
-No signup. No key. JSON response.
+No signup. No key. JSON response with ES256-signed attestation.
 
 ---
 
@@ -40,9 +40,9 @@ No signup. No key. JSON response.
 
 | Tool | What It Does |
 |------|-------------|
-| **trust_check** | Pass/fail verdict for any agent. Score, tier, badges, reasoning. ERC-8004, Olas, or Virtuals. |
-| **reviewer_analysis** | Wallet age of every reviewer. Sybil flags. Same-day creation cluster detection. |
-| **reviewer_wallet** | Behavior profile for any reviewer wallet — velocity, sweep patterns, score clustering, sybil signals. Sock puppet and fake review detection. |
+| **trust_check** | Cryptographically signed trust attestation for any agent. Score, tier, badges, sybil severity, reasoning. ERC-8004, Olas, or Virtuals. |
+| **reviewer_analysis** | Wallet age of every reviewer. Sybil flags. Funding source clusters. Same-day creation cluster detection. |
+| **reviewer_wallet** | Behavior profile for any reviewer wallet — funding source, velocity, sweep patterns, score clustering, sybil signals. Sock puppet and fake review detection. |
 | **compare_agents** | Side-by-side ranking of 2–10 agents with reviewer quality per agent. |
 | **address_age** | Wallet age in days. Time cannot be faked. |
 | **network_stats** | Total agents by registry, chain distribution, commerce totals, trust tier breakdown. |
@@ -54,7 +54,7 @@ All available via MCP (`POST https://rnwy.com/api/mcp`) and REST.
 
 ## The Problem
 
-100,000+ AI agents are registered on-chain with zero trust infrastructure. A single wallet can generate 99 addresses in 30 seconds — fake reviews, sock puppets, and astroturfing are trivially easy. An agent with 1,500 five-star reviews sounds trustworthy until you discover 998 of the reviewer wallets were created on the same day. A single wallet reviewed over 10,000 agents at 510 per day and nobody noticed — until now.
+100,000+ AI agents are registered on-chain with zero trust infrastructure. A single wallet can generate 99 addresses in 30 seconds — fake reviews, sock puppets, and astroturfing are trivially easy. An agent with 1,500 five-star reviews sounds trustworthy until you discover 998 of the reviewer wallets were created on the same day. A single wallet reviewed over 10,000 agents at 510 per day and nobody noticed — until now. An agent owner funded 100 wallets that all reviewed their own agent — and nobody traced the money until now.
 
 Nobody is checking. RNWY checks.
 
@@ -62,9 +62,13 @@ Nobody is checking. RNWY checks.
 
 **Transparent scoring.** Every trust score shows the number, the breakdown, the formula, and the raw data. No black box. Competitors return a number with no explanation. We show the math so you can verify it yourself.
 
-**Sybil detection built in.** We check the wallet age of every single reviewer. Same-day creation clusters, zero-history wallets, repeat reviewers — all flagged, all visible. No other trust provider does this.
+**Cryptographically signed.** Every `/api/trust-check` response includes an ES256-signed attestation envelope — agent ID, chain, registry, score, tier, badges, sybil severity, and timestamp. Verify against our published [JWKS endpoint](https://rnwy.com/.well-known/jwks.json). Part of the [ERC-8183 multi-attestation standard](https://github.com/douglasborthwick-crypto/insumer-examples/issues/1).
 
-**Sock puppet scanner.** The [Scanner](https://rnwy.com/scanner) profiles every reviewer wallet's behavior across the entire ecosystem — velocity (agents reviewed per day), sweep patterns (reviewing hundreds and never returning), and score clustering (giving nearly identical scores). Three weighted signals, transparent severity math, live data.
+**Funding source analysis.** For every wallet that leaves a review, RNWY traces its first inbound ETH transfer. If 3+ wallets that reviewed the same agent were all funded by the same non-exchange address, the funder is flagged. When the funder is the agent's own owner, an `is_agent_owner` flag is set. 42 verified exchange addresses across 18 exchanges are excluded. The heaviest sybil signal (6× weight) — there is no innocent explanation for one address funding dozens of wallets that all reviewed the same agent.
+
+**Sybil detection built in.** Four wallet-level signals — common funder (6×), inhuman velocity (5×), sweep pattern (3×), score clustering (1×) — plus agent-level coordination detection for groups of no-history wallets giving identical scores. We check the wallet age of every single reviewer. Same-day creation clusters, zero-history wallets, repeat reviewers — all flagged, all visible. No other trust provider does this.
+
+**Sock puppet scanner.** The [Scanner](https://rnwy.com/scanner) profiles every reviewer wallet's behavior across the entire ecosystem — funding source, velocity, sweep patterns, score clustering. It surfaces common funder clusters, owner-funded reviews, and the heaviest severity agents. Live data, transparent severity math.
 
 **Multi-registry.** ERC-8004, Olas, and Virtuals indexed. Competitors cover one. RNWY links identities across registries so an ERC-8004 agent doing commerce on Virtuals shows up as one entity, not two unrelated addresses.
 
@@ -136,6 +140,7 @@ curl "https://rnwy.com/api/erc-8183/check?agent_id=2290&chain=base&role=provider
 | **llms.txt** | [rnwy.com/llms.txt](https://rnwy.com/llms.txt) | Capabilities overview + registry stats |
 | **ai.txt** | [rnwy.com/ai.txt](https://rnwy.com/ai.txt) | Crawl permissions + quick-reference URLs |
 | **agent.json** | [rnwy.com/.well-known/agent.json](https://rnwy.com/.well-known/agent.json) | A2A agent card |
+| **jwks.json** | [rnwy.com/.well-known/jwks.json](https://rnwy.com/.well-known/jwks.json) | ES256 public key for verifying trust attestations |
 
 ---
 
@@ -145,7 +150,7 @@ curl "https://rnwy.com/api/erc-8183/check?agent_id=2290&chain=base&role=provider
 - **Database & Auth:** Supabase
 - **Hosting:** Vercel
 - **Blockchain:** Base + Ethereum + 9 other chains
-- **Attestations:** EAS (Ethereum Attestation Service)
+- **Attestations:** EAS (Ethereum Attestation Service) + ES256 signed envelopes
 - **Indexing:** The Graph Protocol (Goldsky subgraphs)
 - **Transaction history:** Alchemy API
 - **Commerce:** Olas subgraphs + Virtuals ACP contracts
@@ -156,7 +161,7 @@ curl "https://rnwy.com/api/erc-8183/check?agent_id=2290&chain=base&role=provider
 |-------|--------|
 | **Soulbound Identity** | ERC-5192 on Base — [BaseScan](https://basescan.org/address/0x3f672dDC694143461ceCE4dEc32251ec2fa71098) |
 | **ERC-8004 Registry** | Same address on all chains: `0x8004A169FB4a3325136EB29fA0ceB6D2e539a432` — [Etherscan](https://etherscan.io/address/0x8004A169FB4a3325136EB29fA0ceB6D2e539a432) · [BaseScan](https://basescan.org/address/0x8004A169FB4a3325136EB29fA0ceB6D2e539a432) |
-| **Attestations** | EAS on Base |
+| **Attestations** | EAS on Base + [JWKS](https://rnwy.com/.well-known/jwks.json) for trust-check signatures |
 | **Commerce** | Olas subgraphs (Gnosis, Base, Polygon, Optimism) + Virtuals ACP (Base) |
 
 ## The Research
