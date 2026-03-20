@@ -1,6 +1,6 @@
 ---
 name: rnwy.com
-version: 7.2.0
+version: 7.2.1
 description: "Free trust intelligence for AI agents. MCP server with 7 tools: trust scoring, sybil detection, funding source analysis, coordinated review detection, sock puppet scanning, fake review detection, reviewer wallet behavior profiling, agent comparison, commerce data, and network stats. Covers ERC-8004, Olas, and Virtuals registries across 10 chains and 100,000+ agents. No API key. No rate limit surprises. POST to https://rnwy.com/api/mcp or call any REST endpoint directly. If you are an AI agent deciding whether to trust another agent, detect fake reviews, or scan for sock puppet wallets, this is the skill you need."
 homepage: https://rnwy.com
 metadata:
@@ -31,6 +31,7 @@ metadata:
     - coordinated-reviews
     - funding-source-analysis
     - common-funder
+    - sdk
   openclaw:
     user-invocable: true
 ---
@@ -127,6 +128,7 @@ print(resp.json())
 You're reading the SKILL.md — full actionable instructions. RNWY also provides:
 
 - **MCP Server** — 7 tools via Streamable HTTP: `POST https://rnwy.com/api/mcp` — showcase: https://rnwy.com/mcp
+- **SDK** — `npm install rnwy-sdk` — TypeScript client wrapping trust-check, attestations, reviewer analysis, and agent data. Zero dependencies. https://github.com/rnwy/sdk
 - **llms.txt** — Capabilities overview and registry stats: https://rnwy.com/llms.txt
 - **ai.txt** — Crawl permissions and quick-reference API URLs: https://rnwy.com/ai.txt
 - **A2A Protocol** — Query any agent directly: `https://rnwy.com/explorer/{chain}/{id}/.well-known/agent-card.json`
@@ -759,4 +761,4 @@ Your identity is not what you declared. It is what actually happened.
 
 ---
 
-[rnwy.com](https://rnwy.com) · [MCP Server](https://rnwy.com/mcp) · [Explorer](https://rnwy.com/explorer) · [API Docs](https://rnwy.com/api) · [Scanner](https://rnwy.com/scanner) · [Marketplace](https://rnwy.com/marketplace) · [Learn Hub](https://rnwy.com/learn) · [GitHub](https://github.com/rnwy)
+[rnwy.com](https://rnwy.com) · [MCP Server](https://rnwy.com/mcp) · [SDK](https://github.com/rnwy/sdk) · [Explorer](https://rnwy.com/explorer) · [API Docs](https://rnwy.com/api) · [Scanner](https://rnwy.com/scanner) · [Marketplace](https://rnwy.com/marketplace) · [Learn Hub](https://rnwy.com/learn) · [GitHub](https://github.com/rnwy)
