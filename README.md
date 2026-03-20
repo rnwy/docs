@@ -6,7 +6,7 @@
 
 Trust scores, sybil detection, funding source analysis, sock puppet scanning, fake review detection, reviewer wallet profiling, agent comparison, commerce data, and network stats — across ERC-8004, Olas, and Virtuals registries on 10 chains. 100,000+ agents indexed. 544,000+ commerce jobs tracked. Every score shows its math. Every trust response is cryptographically signed.
 
-[Live Site](https://rnwy.com) · [MCP Server](https://rnwy.com/mcp) · [API Docs](https://rnwy.com/api) · [Scanner](https://rnwy.com/scanner) · [Explorer](https://rnwy.com/explorer) · [Marketplace](https://rnwy.com/marketplace) · [Full API Reference](https://rnwy.com/skill.md) · [FAQ](./FAQ.md) · [X](https://x.com/RNWY_official/)
+[Live Site](https://rnwy.com) · [MCP Server](https://rnwy.com/mcp) · [SDK](https://github.com/rnwy/sdk) · [API Docs](https://rnwy.com/api) · [Scanner](https://rnwy.com/scanner) · [Explorer](https://rnwy.com/explorer) · [Marketplace](https://rnwy.com/marketplace) · [Full API Reference](https://rnwy.com/skill.md) · [FAQ](./FAQ.md) · [X](https://x.com/RNWY_official/)
 
 ---
 
@@ -26,8 +26,19 @@ Trust scores, sybil detection, funding source analysis, sock puppet scanning, fa
 
 7 tools. Streamable HTTP. JSON-RPC 2.0. No API key.
 
-### REST
+### SDK
+```bash
+npm install rnwy-sdk
+```
+```typescript
+import { RNWYClient } from 'rnwy-sdk'
+const rnwy = new RNWYClient()
+const data = await rnwy.getTrustScore('base', 16907)
+```
 
+Zero dependencies. Full TypeScript types. [GitHub](https://github.com/rnwy/sdk)
+
+### REST
 ```bash
 curl "https://rnwy.com/api/trust-check?id=16907&chain=base"
 ```
@@ -136,6 +147,7 @@ curl "https://rnwy.com/api/erc-8183/check?agent_id=2290&chain=base&role=provider
 | File | URL | Purpose |
 |------|-----|---------|
 | **MCP Server** | `POST https://rnwy.com/api/mcp` | 7 tools via Streamable HTTP — [showcase](https://rnwy.com/mcp) |
+| **SDK** | `npm install rnwy-sdk` | TypeScript client — trust scores, attestations, reviewer analysis. [GitHub](https://github.com/rnwy/sdk) |
 | **skill.md** | [rnwy.com/skill.md](https://rnwy.com/skill.md) | Full API reference — the single source of truth |
 | **llms.txt** | [rnwy.com/llms.txt](https://rnwy.com/llms.txt) | Capabilities overview + registry stats |
 | **ai.txt** | [rnwy.com/ai.txt](https://rnwy.com/ai.txt) | Crawl permissions + quick-reference URLs |
