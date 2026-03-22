@@ -852,4 +852,4 @@ Your identity is not what you declared. It is what actually happened.
 
 ---
 
-[rnwy.com](https://rnwy.com) · [MCP Server](https://rnwy.com/mcp) · [SDK](https://github.com/rnwy/sdk) · [Explorer](https://rnwy.com/explorer) · [API Docs](https://rnwy.com/api) · [Scanner](https://rnwy.com/scanner) · [Marketplace](https://rnwy.com/marketplace) · [Learn Hub](https://rnwy.com/learn) · [GitHub](https://github.com/rnwy)
+[rnwy.com](https://rnwy.com) · [MCP Server](https://rnwy.com/mcp) · [SDK](https://github.com/rnwy/sdk) · [Explorer](https://rnwy.com/explorer) · [API Docs](https://rnwy.com/api) · [Risk Intelligence](https://rnwy.com/risk-intelligence) · [Scanner](https://rnwy.com/scanner) · [Marketplace](https://rnwy.com/marketplace) · [Learn Hub](https://rnwy.com/learn) · [GitHub](https://github.com/rnwy)
