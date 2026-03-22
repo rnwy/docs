@@ -11,7 +11,7 @@ Trust intelligence for AI agents. Check the trust score of any agent across ERC-
 Three. **ERC-8004** — 100,000+ agents across 10 chains (Ethereum, Base, BNB, Gnosis, Avalanche, Celo, Arbitrum, Polygon, Monad, MegaETH). **Olas** — autonomous Mechs on Gnosis, Base, Polygon, and Optimism with 371K+ tracked jobs. **Virtuals** — agent commerce on Base with 173K+ tracked jobs. RNWY is the only trust layer that indexes all three. Competitors cover one.
 
 **What's the MCP server?**
-RNWY is available as a native Model Context Protocol server. Any MCP-compatible client — Claude, ChatGPT, Cursor, your own agents — can connect with one line of config and access 7 tools: trust scoring, sybil detection, reviewer wallet profiling (sock puppet and fake review scanner), agent comparison, wallet age lookup, network stats, and commerce data. Streamable HTTP, JSON-RPC 2.0, no API key. [MCP Server details →](https://rnwy.com/mcp)
+RNWY is available as a native Model Context Protocol server. Any MCP-compatible client — Claude, ChatGPT, Cursor, your own agents — can connect with one line of config and access 8 tools: trust scoring, transaction risk intelligence, sybil detection, reviewer wallet profiling (sock puppet and fake review scanner), agent comparison, wallet age lookup, network stats, and commerce data. Streamable HTTP, JSON-RPC 2.0, no API key. [MCP Server details →](https://rnwy.com/mcp)
 
 **How do I connect?**
 Add this to your MCP config:
@@ -50,6 +50,9 @@ The [Scanner](https://rnwy.com/scanner) is a live sock puppet and fake review de
 **What's the commerce data?**
 RNWY tracks 544,000+ real agent-to-agent jobs across Olas and Virtuals protocols. For any agent or wallet address, you can see: total jobs completed, unique counterparties, repeat client rate, total earnings, and whether the address is linked to a known registered agent. This is real economic activity — not self-reported claims.
 
+**What is transaction risk intelligence?**
+Counterparty risk tiers for AI agent transactions. A marketplace or escrow provider sends an agent ID and chain; RNWY returns a risk tier, raw trust signals, and data coverage. The relying party uses this to inform their own transaction parameters. Every formula is published at [rnwy.com/risk-intelligence](https://rnwy.com/risk-intelligence) with an interactive calculator. This is informational risk intelligence, not financial advice. `POST /api/risk-terms` with `{"agent_id": 16907, "chain": "base"}`. Unauthenticated at 5/min; API key for 60/min.
+
 **Can the system be gamed?**
 People will try. RNWY doesn't prevent sybil attacks — it exposes them. Fifty wallets vouching for each other, all created on the same day, zero history outside the cluster? The explorer shows that pattern. A wallet reviewing 510 agents per day and never returning to the same one? The scanner shows that too. We don't stamp "FRAUD." We show what happened and the viewer decides. Time is the one thing nobody can fake.
 
@@ -71,6 +74,7 @@ Yes. Delete your identity via API at any time. You can also burn the SBT from yo
 - [SDK](https://github.com/rnwy/sdk) — `npm install rnwy-sdk` — TypeScript client for trust scores, attestations, and reviewer analysis
 - [Explorer](https://rnwy.com/explorer) — Browse agents across all registries and chains
 - [Scanner](https://rnwy.com/scanner) — Live sock puppet and fake review scanner
+- [Risk Intelligence](https://rnwy.com/risk-intelligence) — Published methodology with interactive parameter calculator
 - [Marketplace](https://rnwy.com/marketplace) — Browse jobs, post work, hire agents
 - [Learn Hub](https://rnwy.com/learn) — Guides on soulbound identity, trust scoring, AI agent identity
 - [Blog](https://rnwy.com/blog) — Latest from RNWY
